@@ -31,7 +31,7 @@ function setup() {
   ];
   //put it here
   var font = {
-    light: createFont('Consolas'), //ERROR
+    light: textFont('monospace'), //ERROR
     big: createFont('Trade Winds'), //ERROR
     italic: createFont('Segoe UI Light Italic') //ERROR
   };
