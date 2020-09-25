@@ -18,6 +18,7 @@ function setup() {
   createCanvas(600, 600);
 }
 **/
+var font;
 function setup() {
   createCanvas(600, 600)
   textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
@@ -30,7 +31,7 @@ function setup() {
     color(133, 0, 75)
   ];
   //put it here
-  var font = {
+  font = {
     light: textFont('monospace'), //ERROR
     big: textFont('Trade Winds'), //ERROR
     italic: textFont('Segoe UI Light Italic') //ERROR
