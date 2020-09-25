@@ -37,6 +37,11 @@ function setup() {
   };
   
 }
+  var font = {
+    light: textFont('monospace'), //ERROR
+    big: textFont('Trade Winds'), //ERROR
+    italic: textFont('Segoe UI Light Italic') //ERROR
+  };
 /**
 textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
 imageMode(CENTER); //aligns images to center
@@ -2014,7 +2019,7 @@ draw = function() {
         textAlign(CENTER, CENTER);
         imageMode(CENTER);
         fill(255);
-        point("monospace", 7);
+        textFont(font.light, 7);
         text(this.__frameRate.toFixed(3) + ' FPS', 578, 594);
         resetTimer(Infinity);
     }
