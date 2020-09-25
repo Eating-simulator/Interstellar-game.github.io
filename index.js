@@ -38,11 +38,6 @@ function setup() {
   };
   
 }
-  var font = {
-    light: textFont('monospace'), //ERROR
-    big: textFont('Trade Winds'), //ERROR
-    italic: textFont('Segoe UI Light Italic') //ERROR
-  };
 /**
 textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
 imageMode(CENTER); //aligns images to center
