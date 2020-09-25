@@ -1,14 +1,10 @@
 /**
-            [=====]
-               |        
-               |    
-               |    
-            [=====]
- 
- */
+                     Interstellar
+
+         Made by InfinityDude777 and ch1ck3n
+**/
 
 
-//Oops! Studios for the loading algorithm
 //Planets adapted from Tegoon's 'Aurora'
 
 
@@ -17,24 +13,44 @@
 /**
  * To appreciate the star of the show, copy the code on lines 616-1039 to a 600x600 canvas and give it a black background
 */
+/** sadly this does not work here.
+function setup() {
+  createCanvas(600, 600);
+}
+**/
+function setup() {
+  createCanvas(600, 600)
+  textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
+  imageMode(CENTER); //aligns images to center
+  rectMode(CENTER); //aligns drawings from code to center
+  randomSeed(8); //uh i forgot
+  var colors = [
+    color(255, 0, 174),
+    color(0, 0, 0),
+    color(133, 0, 75)
+  ];
+  //put it here
+  var font = {
+    light: createFont('Consolas'), //ERROR
+    big: createFont('Trade Winds'), //ERROR
+    italic: createFont('Segoe UI Light Italic') //ERROR
+  };
+  
+}
+/**
+textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
+imageMode(CENTER); //aligns images to center
+rectMode(CENTER); //aligns images to center
+randomSeed(8); //uh i forgot
+**/
+var page = 'load'; //loading page
+var clicked = false; //the variable "clicked" is false
+var keys = []; //the array "keys" is blank
+var transOpac = 255; //the variable "trans0pac" is set to 255
+var liveTimer = 0; //the variable "liveTimer" is set to 0
 
-
-
-
-
-textAlign(CENTER, CENTER);
-imageMode(CENTER);
-rectMode(CENTER);
-randomSeed(8);
-
-var page = 'load';
-var clicked = false;
-var keys = [];
-var transOpac = 255;
-var liveTimer = 0;
-
-var resetTimer = function(n){
-    var setInf = "KAInfiniteLoopSetTimeout";
+var resetTimer = function(n){ //seting a function "resetTimer"
+    var setInf = "KAInfiniteLoopSetTimeout"; //setting the var (variable) "setInf" to "'KAInfiniteLoopSetTimeout'"
     if(setInf in this) {
         if(typeof this[setInf] === "function"){
             this[setInf](n);
@@ -83,11 +99,13 @@ var star = function(x, y, r, g, b, s){
     popMatrix();
     popStyle();
 };
+/**
 var colors = [
     color(255, 0, 174),
     color(0, 0, 0),
     color(133, 0, 75)
 ];
+**/
 var gradientStroke = function(startWidth, endWidth, startColor, endColor, step) {
     step = step === undefined ? 1 : step > 0 ? step : 1;
     
@@ -97,12 +115,13 @@ var gradientStroke = function(startWidth, endWidth, startColor, endColor, step) 
         line(50, 200, 250, 200);
     }
 };
-
+/**
 var font = {
-    light: createFont('Segoe UI Light'),
-    big: createFont('Segoe UI'),
+    light: createFont('Consolas'),
+    big: createFont('Trade Winds'),
     italic: createFont('Segoe UI Light Italic')
 };
+**/
 var transition = {
     active: false,
     out: false,
