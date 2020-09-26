@@ -2023,7 +2023,7 @@ draw = function() {
         textAlign(CENTER, CENTER);
         imageMode(CENTER);
         fill(255);
-        textFont(font.italic, 7);
+        point(.italic, 7);
         text(this.__frameRate.toFixed(3) + ' FPS', 578, 594);
         resetTimer(Infinity);
     }
