@@ -18,6 +18,7 @@ function setup() {
   createCanvas(600, 600);
 }
 **/
+var font;
 function setup() {
   createCanvas(600, 600)
   textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
@@ -30,7 +31,7 @@ function setup() {
     color(133, 0, 75)
   ];
 
-  var font = {
+  font = {
     light: textFont('Symbol'), //ERROR
     big: textFont('HoloLens MDL2 Assets'), //ERROR
     italic: textFont('Webdings') //ERROR
@@ -2023,7 +2024,7 @@ draw = function() {
         textAlign(CENTER, CENTER);
         imageMode(CENTER);
         fill(255);
-        point(.italic, 7);
+        textFont(font.italic, 7);
         text(this.__frameRate.toFixed(3) + ' FPS', 578, 594);
         resetTimer(Infinity);
     }
