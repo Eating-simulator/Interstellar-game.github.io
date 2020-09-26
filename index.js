@@ -18,7 +18,6 @@ function setup() {
   createCanvas(600, 600);
 }
 **/
-var font;
 function setup() {
   createCanvas(600, 600)
   textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
@@ -30,13 +29,17 @@ function setup() {
     color(0, 0, 0),
     color(133, 0, 75)
   ];
-  //put it here
-  font = {
-    light: textFont('monospace'), //ERROR
-    big: textFont('Trade Winds'), //ERROR
-    italic: textFont('Segoe UI Light Italic') //ERROR
+  p5.prototype.createFont = function (src) {
+  const elt = document.createElement('font');
+  elt.src = src;
+  return addElement(elt, this);
+};
+  var font = {
+    light: createFont('Consolas'), //ERROR
+    big: createFont('Trade Winds'), //ERROR
+    italic: createFont('Segoe UI Light Italic') //ERROR
   };
-  
+
 }
 /**
 textAlign(CENTER, CENTER); //aligns the text to the center of the 600x600 board
@@ -44,6 +47,7 @@ imageMode(CENTER); //aligns images to center
 rectMode(CENTER); //aligns images to center
 randomSeed(8); //uh i forgot
 **/
+
 var page = 'load'; //loading page
 var clicked = false; //the variable "clicked" is false
 var keys = []; //the array "keys" is blank
@@ -69,7 +73,7 @@ var smallStar = function(x, y, r, g, b, t){
         noStroke();
         fill(r+sq(i), g+sq(i), b+sq(i), 10+pow(8-i, 2)*t);
         ellipse(0, 0, sq(i)*2*0.8, sq(i*1.3)*0.8);
-    
+
     }
     filter(BLUR, 2);
     popMatrix();
@@ -89,7 +93,7 @@ var star = function(x, y, r, g, b, s){
         noStroke();
         fill(200+sq(i), 250+sq(i), 250+sq(i), 7);
         ellipse(100, 100, pow(i, 2.5*1.1), pow(i, 2.5*1.1));
-        
+
         fill(250+sq(i), 250+sq(i), 250+sq(i), 1.5*(5+pow(8-i,3)/2));
         triangle(100-s-sq(i)/20, 100, 100+s+sq(i)/20, 100, 100, 102+pow(i, 2));
         triangle(100-s-sq(i)/20, 100,100+s+sq(i)/20, 100, 100,102-pow(i,2));
@@ -100,16 +104,15 @@ var star = function(x, y, r, g, b, s){
     popMatrix();
     popStyle();
 };
-/**
+
 var colors = [
     color(255, 0, 174),
     color(0, 0, 0),
     color(133, 0, 75)
 ];
-**/
 var gradientStroke = function(startWidth, endWidth, startColor, endColor, step) {
     step = step === undefined ? 1 : step > 0 ? step : 1;
-    
+
     for(var i = startWidth - endWidth; i >= 0; i -= step) {
         stroke(lerpColor(startColor, endColor, 1 + i / (endWidth - startWidth)));
         strokeWeight(i + endWidth);
@@ -118,8 +121,8 @@ var gradientStroke = function(startWidth, endWidth, startColor, endColor, step) 
 };
 /**
 var font = {
-    light: createFont('Consolas'),
-    big: createFont('Trade Winds'),
+    light: createFont('Segoe UI Light'),
+    big: createFont('Segoe UI'),
     italic: createFont('Segoe UI Light Italic')
 };
 **/
@@ -161,7 +164,7 @@ var imgs = {
         ellipse(431, 449, 350, 350);
         ellipse(80, 292, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(153, 104, 130, 100);
         ellipse(300, 300, 350, 350);
         ellipse(80, 425, 350, 350);
@@ -169,7 +172,7 @@ var imgs = {
         ellipse(379, 262, 350, 350);
         ellipse(540, 38, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(235, 172, 159, 100);
         ellipse(300, 300, 200, 200);
         ellipse(80, 425, 200, 200);
@@ -177,7 +180,7 @@ var imgs = {
         ellipse(379, 262, 200, 200);
         ellipse(471, 89, 200, 200);
         ellipse(540, 38, 200, 200);
-        
+
         fill(110, 3, 76);
         ellipse(300, 300, 100, 100);
         ellipse(438, 131, 100, 100);
@@ -190,16 +193,16 @@ var imgs = {
         ellipse(15, 456, 100, 100);
         ellipse(471, 89, 100, 100);
         ellipse(540, 38, 100, 100);
-        
+
         filter(BLUR, 20);
-        
+
         for(var i = 0; i < 15; i++){
             smallStar(random(600), random(600), 255, 255, 255, random(1));
         }
-        
+
         star(280, 200, 255, 0, 100, 4);
         star(20, 30, 255, 20, 100, 6);
-        
+
         pushMatrix();
         translate(248, 530);
         rotate(29);
@@ -209,7 +212,7 @@ var imgs = {
         fill(0, 0, 0, 60);
         for(var i = 0; i<90; i+=3){
             var p = pow(90-i, 1.2);
-            
+
             stroke(p*1.1, p, p*1.3);
             arc(0, 0, (90-i)/9*10, 97, 90, 270);
         }
@@ -221,7 +224,7 @@ var imgs = {
                 var bright = map(noise(xoff, yoff), 0, 1, 0, 1);
                 stroke(bright*255, bright*25, bright*20, x*1.8);
                 point(-x, y);
-               
+
                 yoff += 0.017;
             }
             xoff += 0.15;
@@ -230,18 +233,18 @@ var imgs = {
         noFill();
         for(var i = 0; i<8; i++){
             stroke(255, pow(8-i, 1.75));
-            
+
             var r = 100+i*4;
             ellipse(0, 0, r, r);
         }
         popMatrix();
-        
+
         for(var i = 0; i < 600; i++){
             strokeWeight(random(1, 2));
             stroke(255, random(255));
             point(random(600), random(600));
         }
-        
+
         pushMatrix();
         translate(448, 230);
         rotate(15);
@@ -251,7 +254,7 @@ var imgs = {
         fill(0, 0, 0, 60);
         for(var i = 0; i<90; i+=3){
             var p = pow(90-i, 1.2);
-            
+
             stroke(p/*, p*1.3, p*1.4*/);
             arc(0, 0, (90-i)/9*15, 144.5, 90, 270);
         }
@@ -263,7 +266,7 @@ var imgs = {
                 var bright = map(noise(xoff, yoff), 0, 1, 0, 1);
                 stroke(bright*200, bright, bright, x*2);
                 point(-x, y);
-               
+
                 yoff += 0.017;
             }
             xoff += 0.15;
@@ -272,14 +275,14 @@ var imgs = {
         noFill();
         for(var i = 0; i<8; i++){
             stroke(255, pow(8-i, 1.75));
-            
+
             var r = 150+i*4;
             ellipse(0, 0, r, r);
         }
         popMatrix();
-        
+
         filter(BLUR);
-        
+
         return get(0, 0, 600, 600);
     },
     'gameBK': function(){
@@ -289,7 +292,7 @@ var imgs = {
         ellipse(431, 449, 350, 350);
         ellipse(80, 292, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(64, 45, 55, 100);
         ellipse(300, 300, 350, 350);
         ellipse(80, 425, 350, 350);
@@ -297,7 +300,7 @@ var imgs = {
         ellipse(379, 262, 350, 350);
         ellipse(540, 38, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(82, 68, 66, 100);
         ellipse(300, 300, 200, 200);
         ellipse(80, 425, 200, 200);
@@ -305,7 +308,7 @@ var imgs = {
         ellipse(379, 262, 200, 200);
         ellipse(471, 89, 200, 200);
         ellipse(540, 38, 200, 200);
-        
+
         fill(33, 13, 27);
         ellipse(300, 300, 100, 100);
         ellipse(438, 131, 100, 100);
@@ -318,24 +321,24 @@ var imgs = {
         ellipse(15, 456, 100, 100);
         ellipse(471, 89, 100, 100);
         ellipse(540, 38, 100, 100);
-        
+
         filter(BLUR, 20);
-        
+
         for(var i = 0; i < 15; i++){
             smallStar(random(600), random(600), 255, 255, 255, random(1));
         }
-        
+
         star(280, 200, 255, 0, 100, 4);
         star(20, 30, 255, 20, 100, 6);
-        
+
         for(var i = 0; i < 600; i++){
             strokeWeight(random(1, 2));
             stroke(255, random(255));
             point(random(600), random(600));
         }
-        
+
         filter(BLUR);
-        
+
         return get(0, 0, 600, 600);
     },
     'helpBK': function(){
@@ -345,7 +348,7 @@ var imgs = {
         ellipse(431, 449, 350, 350);
         ellipse(80, 292, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(153, 104, 130, 100);
         ellipse(300, 300, 350, 350);
         ellipse(80, 425, 350, 350);
@@ -353,7 +356,7 @@ var imgs = {
         ellipse(379, 262, 350, 350);
         ellipse(540, 38, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(235, 172, 159, 100);
         ellipse(300, 300, 200, 200);
         ellipse(80, 425, 200, 200);
@@ -361,7 +364,7 @@ var imgs = {
         ellipse(379, 262, 200, 200);
         ellipse(471, 89, 200, 200);
         ellipse(540, 38, 200, 200);
-        
+
         fill(110, 3, 76);
         ellipse(300, 300, 100, 100);
         ellipse(438, 131, 100, 100);
@@ -374,16 +377,16 @@ var imgs = {
         ellipse(15, 456, 100, 100);
         ellipse(471, 89, 100, 100);
         ellipse(540, 38, 100, 100);
-        
+
         filter(BLUR, 25);
-        
+
         for(var i = 0; i < 15; i++){
             smallStar(random(600), random(600), 255, 255, 255, random(1));
         }
-        
+
         star(20, 100, 0, 145, 100, 4);
-        
-        
+
+
         pushMatrix();
         translate(448, 580);
         rotate(39);
@@ -393,7 +396,7 @@ var imgs = {
         fill(0, 0, 0, 60);
         for(var i = 0; i<90; i+=3){
             var p = pow(90-i, 1.2);
-            
+
             stroke(p*1.1, p, p*1.3);
             arc(0, 0, (90-i)/9*10, 97, 90, 270);
         }
@@ -405,7 +408,7 @@ var imgs = {
                 var bright = map(noise(xoff, yoff), 0, 1, 0, 1);
                 stroke(bright*255, bright, bright*100, x*1.8);
                 point(-x, y);
-               
+
                 yoff += 0.017;
             }
             xoff += 0.15;
@@ -414,18 +417,18 @@ var imgs = {
         noFill();
         for(var i = 0; i<8; i++){
             stroke(255, pow(8-i, 1.75));
-            
+
             var r = 100+i*4;
             ellipse(0, 0, r, r);
         }
         popMatrix();
-        
+
         for(var i = 0; i < 600; i++){
             strokeWeight(random(1, 2));
             stroke(255, random(255));
             point(random(600), random(600));
         }
-        
+
         pushMatrix();
         translate(498, 100);
         rotate(-15);
@@ -435,7 +438,7 @@ var imgs = {
         fill(0, 0, 0, 60);
         for(var i = 0; i<90; i+=3){
             var p = pow(90-i, 1.2);
-            
+
             stroke(p/*, p*1.3, p*1.4*/);
             arc(0, 0, (90-i)/9*5, 45, 90, 270);
         }
@@ -447,7 +450,7 @@ var imgs = {
                 var bright = map(noise(xoff, yoff), 0, 1, 0, 1);
                 stroke(bright*200, bright, bright, x*2);
                 point(-x, y);
-               
+
                 yoff += 0.019;
             }
             xoff += 0.15;
@@ -456,14 +459,14 @@ var imgs = {
         noFill();
         for(var i = 0; i<8; i++){
             stroke(255, pow(8-i, 1.75));
-            
+
             var r = 50+i*4;
             ellipse(0, 0, r, r);
         }
         popMatrix();
-        
+
         filter(BLUR);
-        
+
         return get(0, 0, 600, 600);
     },
     'storyBK': function(){
@@ -473,7 +476,7 @@ var imgs = {
         ellipse(431, 449, 350, 350);
         ellipse(80, 292, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(153, 104, 130, 100);
         ellipse(300, 300, 350, 350);
         ellipse(80, 425, 350, 350);
@@ -481,7 +484,7 @@ var imgs = {
         ellipse(379, 262, 350, 350);
         ellipse(540, 38, 350, 350);
         ellipse(435, 210, 350, 350);
-        
+
         fill(235, 172, 159, 100);
         ellipse(300, 300, 200, 200);
         ellipse(80, 425, 200, 200);
@@ -489,7 +492,7 @@ var imgs = {
         ellipse(379, 262, 200, 200);
         ellipse(471, 89, 200, 200);
         ellipse(540, 38, 200, 200);
-        
+
         fill(110, 3, 76);
         ellipse(300, 300, 100, 100);
         ellipse(438, 131, 100, 100);
@@ -502,16 +505,16 @@ var imgs = {
         ellipse(15, 456, 100, 100);
         ellipse(471, 89, 100, 100);
         ellipse(540, 38, 100, 100);
-        
+
         filter(BLUR, 25);
-        
+
         for(var i = 0; i < 15; i++){
             smallStar(random(600), random(600), 255, 255, 255, random(1));
         }
-        
+
         star(280, 200, 0, 145, 100, 4);
-        
-        
+
+
         pushMatrix();
         translate(48, 530);
         rotate(142);
@@ -521,7 +524,7 @@ var imgs = {
         fill(0, 0, 0, 60);
         for(var i = 0; i<90; i+=3){
             var p = pow(90-i, 1.2);
-            
+
             stroke(p*1.1, p, p*1.3);
             arc(0, 0, (90-i)/9*10, 97, 90, 270);
         }
@@ -533,7 +536,7 @@ var imgs = {
                 var bright = map(noise(xoff, yoff), 0, 1, 0, 1);
                 stroke(bright*255, bright*25, bright*20, x*1.8);
                 point(-x, y);
-               
+
                 yoff += 0.017;
             }
             xoff += 0.15;
@@ -542,31 +545,31 @@ var imgs = {
         noFill();
         for(var i = 0; i<8; i++){
             stroke(255, pow(8-i, 1.75));
-            
+
             var r = 100+i*4;
             ellipse(0, 0, r, r);
         }
         popMatrix();
-        
+
         for(var i = 0; i < 600; i++){
             strokeWeight(random(1, 2));
             stroke(255, random(255));
             point(random(600), random(600));
         }
-        
+
         filter(BLUR);
-        
+
         return get(0, 0, 600, 600);
     },
     'title': function(){
-        
+
         strokeWeight(1.5);
         for (var i = 0; i < width * 2; i++) {
             stroke(lerpColor(i < width ? colors[0] : colors[1], i < width ? colors[1] : colors[2], i / width % 1));
             line(Math.min(i, 600), Math.max(i - 900, 0), 0, i/2);
         }
         var bk = get(0, 45, 600, 254);
-        
+
         background(0, 0);
         fill(255);
         pushMatrix();
@@ -576,11 +579,11 @@ var imgs = {
         text('INTERSTELLAR', 0, 0);
         popMatrix();
         var wrd = get(0, 45, 600, 254);
-        
+
         bk.mask(wrd);
-        
+
         image(bk, 300, 172);
-        
+
         return get(0, 0, 600, 300);
     },
     'help': function(){
@@ -590,7 +593,7 @@ var imgs = {
             line(Math.min(i, 600), Math.max(i - 900, 0), 0, i/2);
         }
         var bk = get(0, 45, 600, 254);
-        
+
         background(0, 0);
         fill(255);
         pushMatrix();
@@ -600,11 +603,11 @@ var imgs = {
         text('HOW TO PLAY', 0, 0);
         popMatrix();
         var wrd = get(0, 45, 600, 254);
-        
+
         bk.mask(wrd);
-        
+
         image(bk, 300, 172);
-        
+
         return get(0, 0, 600, 300);
     },
     'story': function(){
@@ -614,7 +617,7 @@ var imgs = {
             line(Math.min(i, 600), Math.max(i - 900, 0), 0, i/2);
         }
         var bk = get(0, 45, 600, 254);
-        
+
         background(0, 0);
         fill(255);
         pushMatrix();
@@ -624,11 +627,11 @@ var imgs = {
         text('STORYLINE', 0, 0);
         popMatrix();
         var wrd = get(0, 45, 600, 254);
-        
+
         bk.mask(wrd);
-        
+
         image(bk, 300, 172);
-        
+
         return get(0, 0, 600, 300);
     },
     'ship': function(){
@@ -637,10 +640,10 @@ var imgs = {
         stroke(255, 0, 0);
         strokeWeight(1);
         noStroke();
-        
+
         quad(62, 35, 46, 52, 125, 57, 112, 42);
         quad(140, 35, 112, 52, 171, 57, 156, 42);
-        
+
         //Left main wing
         beginShape();
         vertex(38, 38);
@@ -661,7 +664,7 @@ var imgs = {
         vertex(105, 11);
         vertex(38, 38);
         endShape();
-        
+
         //Left wing extension
         beginShape();
         vertex(155, 16);
@@ -672,7 +675,7 @@ var imgs = {
         vertex(189, 6);
         vertex(155, 16);
         endShape();
-        
+
         //Left wing inside front
         beginShape();
         vertex(105, 64);
@@ -683,7 +686,7 @@ var imgs = {
         vertex(111, 60);
         vertex(105, 64);
         endShape();
-        
+
         //Left wing inside back
         beginShape();
         vertex(6, 54);
@@ -697,14 +700,14 @@ var imgs = {
         vertex(29, 41);
         vertex(6, 54);
         endShape();
-        
+
         fill(97, 97, 97);
-        
+
         //Small details left wing
         quad(101, 35, 105, 27, 81, 24, 74, 33);
         quad(135, 38, 138, 34, 166, 37, 168, 41);
         quad(125, 60, 130, 56, 188, 58, 187, 62);
-        
+
         beginShape();
         vertex(109, 36);
         vertex(120, 20);
@@ -714,8 +717,8 @@ var imgs = {
         vertex(126, 37);
         vertex(109, 36);
         endShape();
-        
-        
+
+
         beginShape();
         vertex(190, 11);
         vertex(184, 15);
@@ -729,16 +732,16 @@ var imgs = {
         vertex(190, 11);
         endShape();
         noStroke();
-        
+
         fill(148, 0, 0);
-        
+
         quad(272, 35, 280, 36, 270, 51, 262, 51);
         for(var i = 0; i < 10; i++){
             stroke(0, i*13);
             line(148+i, 44, 156+i, 53);
             stroke(i*13);
             line(129+i, 43, 117+i, 52);
-            
+
             stroke(0, i*13);
             line(99+i, 41, 112+i, 52);
             stroke(i*13);
@@ -801,9 +804,9 @@ var imgs = {
             vertex(190, 11);
             endShape();
         }
-        
+
         popMatrix();
-        
+
         fill(153);
         //Cockpit
         beginShape();
@@ -836,15 +839,15 @@ var imgs = {
         vertex(164, 65);
         vertex(188, 68);
         endShape();
-        
+
         for(var i = 0; i < 4; i++){
             stroke(0, 255-i*80);
             line(45, 63+i, 190, 65+i);
         }
-        
-        
+
+
         //RIGHT SIDE
-        
+
         pushMatrix();
         translate(0, 145);
         scale(1, -1);
@@ -852,10 +855,10 @@ var imgs = {
         stroke(255, 0, 0);
         strokeWeight(1);
         noStroke();
-        
+
         quad(62, 35, 46, 52, 125, 57, 112, 42);
         quad(140, 35, 112, 52, 171, 57, 156, 42);
-        
+
         //Left main wing
         beginShape();
         vertex(38, 38);
@@ -876,7 +879,7 @@ var imgs = {
         vertex(105, 11);
         vertex(38, 38);
         endShape();
-        
+
         //Left wing extension
         beginShape();
         vertex(155, 16);
@@ -887,7 +890,7 @@ var imgs = {
         vertex(189, 6);
         vertex(155, 16);
         endShape();
-        
+
         //Left wing inside front
         beginShape();
         vertex(105, 64);
@@ -898,7 +901,7 @@ var imgs = {
         vertex(111, 60);
         vertex(105, 64);
         endShape();
-        
+
         //Left wing inside back
         beginShape();
         vertex(6, 54);
@@ -912,14 +915,14 @@ var imgs = {
         vertex(29, 41);
         vertex(6, 54);
         endShape();
-        
+
         fill(97, 97, 97);
-        
+
         //Small details left wing
         quad(101, 35, 105, 27, 81, 24, 74, 33);
         quad(135, 38, 138, 34, 166, 37, 168, 41);
         quad(125, 60, 130, 56, 188, 58, 187, 62);
-        
+
         beginShape();
         vertex(109, 36);
         vertex(120, 20);
@@ -929,8 +932,8 @@ var imgs = {
         vertex(126, 37);
         vertex(109, 36);
         endShape();
-        
-        
+
+
         beginShape();
         vertex(190, 11);
         vertex(184, 15);
@@ -944,16 +947,16 @@ var imgs = {
         vertex(190, 11);
         endShape();
         noStroke();
-        
+
         fill(148, 0, 0);
-        
+
         quad(272, 35, 280, 36, 270, 51, 262, 51);
         for(var i = 0; i < 10; i++){
             stroke(0, i*13);
             line(148+i, 44, 156+i, 53);
             stroke(i*13);
             line(129+i, 43, 117+i, 52);
-            
+
             stroke(0, i*13);
             line(99+i, 41, 112+i, 52);
             stroke(i*13);
@@ -1016,9 +1019,9 @@ var imgs = {
             vertex(190, 11);
             endShape();
         }
-        
+
         popMatrix();
-        
+
         fill(153);
         //Cockpit
         beginShape();
@@ -1051,26 +1054,26 @@ var imgs = {
         vertex(164, 65);
         vertex(188, 68);
         endShape();
-        
+
         for(var i = 0; i < 4; i++){
             stroke(0, 255-i*80);
             line(45, 63+i, 190, 65+i);
         }
         popMatrix();
-        
+
         return get(5, 5, 314, 134);
     },
     'eship': function(){
         background(0, 0);
-        
+
         fill(99, 99, 99);
         stroke(255, 0, 0);
         strokeWeight(1);
         noStroke();
-        
+
         quad(62, 35, 46, 52, 125, 57, 112, 42);
         quad(140, 35, 112, 52, 171, 57, 156, 42);
-        
+
         //Left main wing
         beginShape();
         vertex(38, 38);
@@ -1091,7 +1094,7 @@ var imgs = {
         vertex(105, 11);
         vertex(38, 38);
         endShape();
-        
+
         //Left wing extension
         beginShape();
         vertex(155, 16);
@@ -1102,7 +1105,7 @@ var imgs = {
         vertex(189, 6);
         vertex(155, 16);
         endShape();
-        
+
         //Left wing inside front
         beginShape();
         vertex(105, 64);
@@ -1113,7 +1116,7 @@ var imgs = {
         vertex(111, 60);
         vertex(105, 64);
         endShape();
-        
+
         //Left wing inside back
         beginShape();
         vertex(6, 54);
@@ -1127,14 +1130,14 @@ var imgs = {
         vertex(29, 41);
         vertex(6, 54);
         endShape();
-        
+
         fill(184, 184, 184);
-        
+
         //Small details left wing
         quad(101, 35, 105, 27, 81, 24, 74, 33);
         quad(135, 38, 138, 34, 166, 37, 168, 41);
         quad(125, 60, 130, 56, 188, 58, 187, 62);
-        
+
         beginShape();
         vertex(109, 36);
         vertex(120, 20);
@@ -1144,8 +1147,8 @@ var imgs = {
         vertex(126, 37);
         vertex(109, 36);
         endShape();
-        
-        
+
+
         beginShape();
         vertex(190, 11);
         vertex(184, 15);
@@ -1159,16 +1162,16 @@ var imgs = {
         vertex(190, 11);
         endShape();
         noStroke();
-        
+
         fill(148, 0, 0);
-        
+
         quad(272, 35, 280, 36, 270, 51, 262, 51);
         for(var i = 0; i < 10; i++){
             stroke(0, i*13);
             line(148+i, 44, 156+i, 53);
             stroke(i*13);
             line(129+i, 43, 117+i, 52);
-            
+
             stroke(0, i*13);
             line(99+i, 41, 112+i, 52);
             stroke(i*13);
@@ -1231,9 +1234,9 @@ var imgs = {
             vertex(190, 11);
             endShape();
         }
-        
+
         popMatrix();
-        
+
         fill(99, 99, 99);
         //Cockpit
         beginShape();
@@ -1266,15 +1269,15 @@ var imgs = {
         vertex(164, 65);
         vertex(188, 68);
         endShape();
-        
+
         for(var i = 0; i < 4; i++){
             stroke(0, 255-i*80);
             line(45, 63+i, 190, 65+i);
         }
-        
-        
+
+
         //RIGHT SIDE
-        
+
         pushMatrix();
         translate(0, 145);
         scale(1, -1);
@@ -1282,10 +1285,10 @@ var imgs = {
         stroke(255, 0, 0);
         strokeWeight(1);
         noStroke();
-        
+
         quad(62, 35, 46, 52, 125, 57, 112, 42);
         quad(140, 35, 112, 52, 171, 57, 156, 42);
-        
+
         //Left main wing
         beginShape();
         vertex(38, 38);
@@ -1306,7 +1309,7 @@ var imgs = {
         vertex(105, 11);
         vertex(38, 38);
         endShape();
-        
+
         //Left wing extension
         beginShape();
         vertex(155, 16);
@@ -1317,7 +1320,7 @@ var imgs = {
         vertex(189, 6);
         vertex(155, 16);
         endShape();
-        
+
         //Left wing inside front
         beginShape();
         vertex(105, 64);
@@ -1328,7 +1331,7 @@ var imgs = {
         vertex(111, 60);
         vertex(105, 64);
         endShape();
-        
+
         //Left wing inside back
         beginShape();
         vertex(6, 54);
@@ -1342,14 +1345,14 @@ var imgs = {
         vertex(29, 41);
         vertex(6, 54);
         endShape();
-        
+
         fill(184, 184, 184);
-        
+
         //Small details left wing
         quad(101, 35, 105, 27, 81, 24, 74, 33);
         quad(135, 38, 138, 34, 166, 37, 168, 41);
         quad(125, 60, 130, 56, 188, 58, 187, 62);
-        
+
         beginShape();
         vertex(109, 36);
         vertex(120, 20);
@@ -1359,8 +1362,8 @@ var imgs = {
         vertex(126, 37);
         vertex(109, 36);
         endShape();
-        
-        
+
+
         beginShape();
         vertex(190, 11);
         vertex(184, 15);
@@ -1374,16 +1377,16 @@ var imgs = {
         vertex(190, 11);
         endShape();
         noStroke();
-        
+
         fill(148, 0, 0);
-        
+
         quad(272, 35, 280, 36, 270, 51, 262, 51);
         for(var i = 0; i < 10; i++){
             stroke(0, i*13);
             line(148+i, 44, 156+i, 53);
             stroke(i*13);
             line(129+i, 43, 117+i, 52);
-            
+
             stroke(0, i*13);
             line(99+i, 41, 112+i, 52);
             stroke(i*13);
@@ -1446,9 +1449,9 @@ var imgs = {
             vertex(190, 11);
             endShape();
         }
-        
+
         popMatrix();
-        
+
         fill(99, 99, 99);
         //Cockpit
         beginShape();
@@ -1481,13 +1484,13 @@ var imgs = {
         vertex(164, 65);
         vertex(188, 68);
         endShape();
-        
+
         for(var i = 0; i < 4; i++){
             stroke(0, 255-i*80);
             line(45, 63+i, 190, 65+i);
         }
         popMatrix();
-        
+
         return get(5, 5, 314, 134);
     },
     'youBullet': function(){
@@ -1500,7 +1503,7 @@ var imgs = {
         gradientStroke(23, 8, color(120, 0, 0), color(255, 0, 0));
         stroke(255);
         line(50, 200, 250, 200);
-        
+
         return get(26, 175, 250, 51);
     },
     'eBullet': function(){
@@ -1513,7 +1516,7 @@ var imgs = {
         gradientStroke(23, 8, color(0, 0, 120), color(0, 0, 255));
         stroke(255);
         line(50, 200, 250, 200);
-        
+
         return get(26, 175, 250, 51);
     },
     'deadTitle': function(){
@@ -1523,7 +1526,7 @@ var imgs = {
             line(Math.min(i, 600), Math.max(i - 900, 0), 0, i/2);
         }
         var bk = get(0, 45, 600, 254);
-        
+
         background(0, 0);
         fill(255);
         pushMatrix();
@@ -1533,11 +1536,11 @@ var imgs = {
         text('YOU DIED', 0, 0);
         popMatrix();
         var wrd = get(0, 45, 600, 254);
-        
+
         bk.mask(wrd);
-        
+
         image(bk, 300, 172);
-        
+
         return get(0, 0, 600, 300);
     },
 };
@@ -1559,15 +1562,23 @@ var load = function(){
         textSize(15);
         if(curLoad%4===1){
             text('Please Wait.', 300, 400);
+            textSize(25);
+            text('Made by ID7 (InfinityDude777) and ch1ck3n', 300, 200);
         }
         if(curLoad%4===2){
             text('Please Wait..', 300, 400);
+            textSize(25);
+            text('Made by ID7 (InfinityDude777) and ch1ck3n', 300, 200);
         }
         if(curLoad%4===3){
             text('Please Wait...', 300, 400);
+            textSize(25);
+            text('Made by ID7 (InfinityDude777) and ch1ck3n', 300, 200);
         }
         if(curLoad%4===0){
             text('Please Wait', 300, 400);
+            textSize(25);
+            text('Made by ID7 (InfinityDude777) and ch1ck3n', 300, 200);
         }
         loaded = false;
     }
@@ -1583,7 +1594,7 @@ var Button = function(label, x, y, s, next){
     this.label = label;
     this.s = s;
     this.next = next;
-    
+
     this.lineLength = 0;
     this.offButton = 0;
 };
@@ -1611,7 +1622,7 @@ Button.prototype.display = function(){
         line(this.x+this.lineLength, this.y+this.height/2, this.x-this.lineLength, this.y+this.height/2);
         line(this.x+this.lineLength, this.y-this.height/2, this.x-this.lineLength, this.y-this.height/2);
     }
-    
+
     fill(255);
     var msg = this.label;
     textFont(font.big, this.s);
@@ -1654,14 +1665,14 @@ var bullets = [];
 var Asteroid = function(){
     this.x = random(-300, 900);
     this.y = -50;
-    
+
     this.darkness = random(0, 100);
-    
+
     this.xSpd = random(-5, 5);
     this.ySpd = random(-5, 5);
     this.rot = 0;
     this.rotSpd = random(-3, 3);
-    
+
     this.dead = false;
 };
 Asteroid.prototype.update = function(){
@@ -1689,7 +1700,7 @@ Asteroid.prototype.display = function(){
         vertex(24, 10);
         vertex(16, -8);
         endShape(CLOSE);
-        
+
         fill(0, this.darkness);
         beginShape();
         vertex(20, -11);
@@ -1716,7 +1727,7 @@ var asteroids = [];
 var Enemy = function(){
     this.x = random(0, 600);
     this.y = -50;
-    
+
     this.spd = random(3, 5);
     this.dead = false;
 };
@@ -1742,21 +1753,21 @@ var enemies = [];
 var Player = function(x, y){
     this.x = x;
     this.y = y;
-    
+
     this.xVel = 0;
     this.yVel = 0;
     this.accel = 0.1;
     this.speed = 3;
-    
+
     this.scl = 50;
     this.rot = -90;
     this.sclChng = 0.01;
-    
+
     this.shooting = false;
     this.reload = 0;
     this.bltX = null;
     this.bltY = null;
-    
+
     this.dead = false;
 };
 Player.prototype.update = function(){
@@ -1765,7 +1776,7 @@ Player.prototype.update = function(){
         this.scl+=Smooth(this.scl, keys[LEFT]||keys[RIGHT]?40:50, 10);
         this.rot+=Smooth(this.rot, keys[RIGHT]?-75:-90, 10);
         this.rot+=Smooth(this.rot, keys[LEFT]?-105:-90, 10);
-        
+
         if(keys[32]&&this.reload>=30){
             this.reload = 0;
             this.shooting = true;
@@ -1832,9 +1843,9 @@ Player.prototype.update = function(){
                 bullets.splice(i, 1);
                 continue;
             }
-            
+
         }
-        
+
         this.x = constrain(this.x, 30, 570);
         this.y = constrain(this.y, 40, 570);
         this.rot = constrain(this.rot, -100, -80);
@@ -1875,12 +1886,12 @@ var menu = function(){
     popMatrix();
     fill(255, 255, 255);
     textSize(10);
-    text('A Game by Loyalty', 47, 591);
+    text('A Game by ID7 (InfinityDude777) and ch1ck3n', 47, 591);
     image(imgs.title, 300, 105);
     buttons.play.pack();
     buttons.help.pack();
     buttons.story.pack();
-    
+
     liveTimer = 0;
     player.dead = false;
     player.x = 300;
@@ -1888,7 +1899,7 @@ var menu = function(){
     bullets.splice(0, bullets.length);
     asteroids.splice(0, asteroids.length);
     enemies.splice(0, enemies.length);
-    
+
     if(loaded){
         noStroke();
         fill(0, transOpac);
@@ -2015,7 +2026,7 @@ draw = function() {
         textAlign(CENTER, CENTER);
         imageMode(CENTER);
         fill(255);
-        textFont(font.light, 7);
+        textFont(font.italic, 7);
         text(this.__frameRate.toFixed(3) + ' FPS', 578, 594);
         resetTimer(Infinity);
     }
