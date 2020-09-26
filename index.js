@@ -31,9 +31,9 @@ function setup() {
   ];
 
   var font = {
-    light: createFont('Symbol'), //ERROR
-    big: createFont('HoloLens MDL2 Assets'), //ERROR
-    italic: createFont('Webdings') //ERROR
+    light: textFont('Symbol'), //ERROR
+    big: textFont('HoloLens MDL2 Assets'), //ERROR
+    italic: textFont('Webdings') //ERROR
   };
 
 }
