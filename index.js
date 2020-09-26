@@ -29,15 +29,11 @@ function setup() {
     color(0, 0, 0),
     color(133, 0, 75)
   ];
-  p5.prototype.createFont = function (src) {
-  const elt = document.createElement('font');
-  elt.src = src;
-  return addElement(elt, this);
-};
+
   var font = {
-    light: createFont('Consolas'), //ERROR
-    big: createFont('Trade Winds'), //ERROR
-    italic: createFont('Segoe UI Light Italic') //ERROR
+    light: createFont('Symbol'), //ERROR
+    big: createFont('HoloLens MDL2 Assets'), //ERROR
+    italic: createFont('Webdings') //ERROR
   };
 
 }
@@ -104,12 +100,13 @@ var star = function(x, y, r, g, b, s){
     popMatrix();
     popStyle();
 };
-
+/**
 var colors = [
     color(255, 0, 174),
     color(0, 0, 0),
     color(133, 0, 75)
 ];
+**/
 var gradientStroke = function(startWidth, endWidth, startColor, endColor, step) {
     step = step === undefined ? 1 : step > 0 ? step : 1;
 
